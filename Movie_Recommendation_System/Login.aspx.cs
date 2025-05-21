@@ -17,6 +17,7 @@ namespace Movie_Recommendation_System
 {
     public partial class Login : System.Web.UI.Page
     {
+        private string connectionString = WebConfigurationManager.ConnectionStrings["MRS"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -50,7 +51,6 @@ namespace Movie_Recommendation_System
             string enteredUsername = txtUsername.Text;
             string enteredPassword = txtPassword.Text;
 
-            string connectionString = WebConfigurationManager.ConnectionStrings["MRS"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -68,6 +68,8 @@ namespace Movie_Recommendation_System
 
                     if (isPasswordCorrect)
                     {
+                        Session["isAdmin"] = reader["isAdmin"];
+                        Session["userID"] = reader["Id"];
                         Response.Redirect("Home.aspx");
                     }
                     else

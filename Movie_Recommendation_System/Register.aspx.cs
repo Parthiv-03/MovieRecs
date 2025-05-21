@@ -75,12 +75,13 @@ namespace Movie_Recommendation_System
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO Users (Username, Email, PasswordHash, PasswordSalt) VALUES (@Username, @Email, @PasswordHash, @PasswordSalt)";
+                string query = "INSERT INTO Users (Username, Email, PasswordHash, PasswordSalt, isAdmin) VALUES (@Username, @Email, @PasswordHash, @PasswordSalt, @isAdmin)";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Username", username);
                 cmd.Parameters.AddWithValue("@Email", email);
                 cmd.Parameters.AddWithValue("@PasswordHash", hashedPassword);
                 cmd.Parameters.AddWithValue("@PasswordSalt", salt);
+                cmd.Parameters.AddWithValue("@isAdmin", 0);
                 conn.Open();
                 int rowsAffected = cmd.ExecuteNonQuery();
                 return rowsAffected > 0;
